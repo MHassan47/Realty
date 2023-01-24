@@ -9,9 +9,12 @@ import React, { useState } from "react";
 import { authentication } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { AuthParamList } from "../navigators/AuthStack";
 
 const Register = () => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AuthParamList, "Register">>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
