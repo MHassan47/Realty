@@ -25,7 +25,7 @@ const Login = () => {
         email,
         password
       );
-      console.log(userCredentials.user?.email, "has logged in successfully");
+      navigation.navigate("AppStack");
     } catch (error) {
       console.error(error);
     }
