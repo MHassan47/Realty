@@ -11,21 +11,27 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthParamList } from "../navigators/AuthStack";
-
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/userSlice";
 const Login = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthParamList, "Login">>();
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignIn = async () => {
     try {
-      const userCredentials = await signInWithEmailAndPassword(
+      const { user } = await signInWithEmailAndPassword(
         authentication,
         email,
         password
       );
-      navigation.navigate("AppStack");
+
+      dispatch(
+        setUser({ name: user.displayName, email: user.email, id: user.uid })
+      );
     } catch (error) {
       console.error(error);
     }
@@ -40,6 +46,7 @@ const Login = () => {
         <TextInput
           placeholder="Email"
           value={email}
+          keyboardType="email-address"
           onChangeText={(text) => setEmail(text)}
           className="bg-white px-4 py-3 rounded-lg mt-2 "
         />
