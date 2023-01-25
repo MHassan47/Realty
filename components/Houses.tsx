@@ -16,8 +16,14 @@ const Houses = () => {
           image={house.image}
           price={house.price}
           location={house.location}
+          address={house.address}
+          longitude={house.longitude}
+          latitude={house.latitude}
           bedrooms={house.rooms.bedrooms}
           bathrooms={house.rooms.bathrooms}
+          size={house.size}
+          cars={house.cars}
+          description={house.description}
         />
       ))}
     </ScrollView>
