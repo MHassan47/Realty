@@ -16,8 +16,14 @@ export type HomeStackParamList = {
     image: string;
     price: number;
     location: string;
+    address: string;
+    longitude: number;
+    latitude: number;
     bedrooms: number;
     bathrooms: number;
+    size: number;
+    cars: number;
+    description: string;
   };
 };
 
