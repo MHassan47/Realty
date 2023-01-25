@@ -1,9 +1,40 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import { AntDesign, Ionicons, EvilIcons } from "@expo/vector-icons";
 import ProfileScreen from "../screens/ProfileScreen";
+
+import { HouseType } from "../components/HouseItem";
+import HouseScreen from "../screens/HouseScreen";
 const Tab = createBottomTabNavigator();
 
+export type HomeStackParamList = {
+  Home: undefined;
+  House: {
+    id: string;
+    title: string;
+    image: string;
+    price: number;
+    location: string;
+    bedrooms: number;
+    bathrooms: number;
+  };
+};
+
+const HomeStack = createNativeStackNavigator<HomeStackParamList>();
+
+const HomeScreenStack = () => {
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen
+        name="House"
+        component={HouseScreen}
+        options={{ presentation: "modal" }}
+      />
+    </HomeStack.Navigator>
+  );
+};
 const AppStack = () => {
   return (
     <Tab.Navigator
@@ -12,7 +43,7 @@ const AppStack = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Home") {
+          if (route.name === "HomeStack") {
             iconName = "home";
             return <AntDesign name={"home"} size={size} color={color} />;
           } else if (route.name === "Profile") {
@@ -26,7 +57,7 @@ const AppStack = () => {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="HomeStack" component={HomeScreenStack} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
