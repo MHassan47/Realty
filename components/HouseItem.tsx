@@ -48,7 +48,9 @@ const HouseItem: FC<HouseType> = ({
       <View className="px-3 ">
         <View className="flex-row justify-between py-1">
           <Text className="text-lg font-semibold">{title}</Text>
-          <Text className="text-lg font-semibold">${price}</Text>
+          <Text className="text-lg font-semibold">
+            ${price.toLocaleString()}
+          </Text>
         </View>
         <Text className="font-semibold text-sm mb-2">{location}</Text>
         <View className="flex-row space-x-5">
