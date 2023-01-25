@@ -9,8 +9,14 @@ export interface HouseType {
   image: string;
   price: number;
   location: string;
+  address: string;
+  longitude: number;
+  latitude: number;
   bedrooms: number;
   bathrooms: number;
+  size: number;
+  cars: number;
+  description: string;
 }
 
 const HouseItem: FC<HouseType> = ({
@@ -19,8 +25,14 @@ const HouseItem: FC<HouseType> = ({
   image,
   price,
   location,
+  address,
+  longitude,
+  latitude,
   bedrooms,
   bathrooms,
+  size,
+  cars,
+  description,
 }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<HomeStackParamList, "Home">>();
@@ -34,8 +46,14 @@ const HouseItem: FC<HouseType> = ({
           image,
           price,
           location,
+          address,
+          longitude,
+          latitude,
           bedrooms,
           bathrooms,
+          size,
+          cars,
+          description,
         })
       }
     >
