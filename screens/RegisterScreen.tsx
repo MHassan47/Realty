@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { authentication } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthParamList } from "../navigators/AuthStack";
@@ -15,16 +15,21 @@ import { AuthParamList } from "../navigators/AuthStack";
 const Register = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthParamList, "Register">>();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignUp = async () => {
     try {
+      // Create user with email, password and additional fields
       const userCredentials = await createUserWithEmailAndPassword(
         authentication,
         email,
         password
       );
+      const user = userCredentials.user;
+      await updateProfile(user, { displayName: `${firstName} ${lastName}` });
     } catch (error) {
       console.error(error);
     }
@@ -37,7 +42,20 @@ const Register = () => {
     >
       <View className="w-4/5">
         <TextInput
+          placeholder="First Name"
+          value={firstName}
+          onChangeText={(text) => setFirstName(text)}
+          className="bg-white px-4 py-3 rounded-lg mt-2 "
+        />
+        <TextInput
+          placeholder="Last Name"
+          value={lastName}
+          onChangeText={(text) => setLastName(text)}
+          className="bg-white px-4 py-3 rounded-lg mt-2 "
+        />
+        <TextInput
           placeholder="Email"
+          keyboardType="email-address"
           value={email}
           onChangeText={(text) => setEmail(text)}
           className="bg-white px-4 py-3 rounded-lg mt-2 "
