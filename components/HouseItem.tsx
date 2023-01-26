@@ -7,6 +7,7 @@ export interface HouseType {
   id: string;
   title: string;
   image: string;
+  scroll_images: string[];
   price: number;
   location: string;
   address: string;
@@ -23,6 +24,7 @@ const HouseItem: FC<HouseType> = ({
   id,
   title,
   image,
+  scroll_images,
   price,
   location,
   address,
@@ -44,6 +46,7 @@ const HouseItem: FC<HouseType> = ({
           id,
           title,
           image,
+          scroll_images,
           price,
           location,
           address,
@@ -79,6 +82,12 @@ const HouseItem: FC<HouseType> = ({
           <Text className="font-semibold">
             {bathrooms}{" "}
             <Text className="font-normal text-[#437370]">Bathrooms</Text>
+          </Text>
+          <Text className="font-semibold">
+            {size.toLocaleString()}{" "}
+            <Text className="font-normal text-[#437370]">
+              ft{String.fromCharCode(178)}
+            </Text>
           </Text>
         </View>
       </View>
