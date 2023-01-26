@@ -14,6 +14,7 @@ const Houses = () => {
           id={house.id}
           title={house.title}
           image={house.image}
+          scroll_images={house.scroll_images}
           price={house.price}
           location={house.location}
           address={house.address}
