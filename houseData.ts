@@ -4,6 +4,7 @@ export const houses = [
     title: "first house",
     image:
       "https://photos.zillowstatic.com/fp/c73ec60a73c5ffdeceaf55119ff1d811-p_e.jpg",
+    scroll_images: [],
     price: 276000,
     address: "1623 Myrtle Drive",
     location: "Seattle, WA",
@@ -20,6 +21,7 @@ export const houses = [
     title: "second house",
     image:
       "https://photos.zillowstatic.com/fp/75d031fc60d2b36f716b4d0bdc1bd802-p_e.jpg",
+    scroll_images: [],
     price: 399000,
     address: "1915 Juniper Drive",
     location: "Vancouver, BC",
@@ -36,6 +38,7 @@ export const houses = [
     title: "third house",
     image:
       "https://photos.zillowstatic.com/fp/89c2d1714755956b107432fd8430936c-p_e.jpg",
+    scroll_images: [],
     price: 270000,
     address: "2012 Lake Mose Lane",
     location: "Toronto, ON",
@@ -52,6 +55,7 @@ export const houses = [
     title: "fourth house",
     image:
       "https://photos.zillowstatic.com/fp/4f8d35583e0493ab534b480c5ec09e02-p_e.jpg",
+    scroll_images: [],
     price: 392000,
     address: "55 Pinecove Street",
     location: "Houston, TX",
@@ -68,6 +72,12 @@ export const houses = [
     title: "fifth house",
     image:
       "https://photos.zillowstatic.com/fp/1d30f88e86d10b3712a43534920396a3-p_e.jpg",
+    scroll_images: [
+      "https://photos.zillowstatic.com/fp/0874d86c857b5dceb6a4e15a06233973-cc_ft_384.webp",
+      "https://photos.zillowstatic.com/fp/21fa287cd61a8f12064a5fe373e8539a-cc_ft_384.webp",
+      "https://photos.zillowstatic.com/fp/3b53d985fa548d95034b376a51030bcd-cc_ft_384.webp",
+      "https://photos.zillowstatic.com/fp/eb49f773764151edc5c93d80379f0d8a-cc_ft_384.webp",
+    ],
     price: 560000,
     address: "103 Bird Creek Drive",
     location: "Atlanta, GA",
@@ -84,6 +94,7 @@ export const houses = [
     title: "sixth house",
     image:
       "https://photos.zillowstatic.com/fp/a8a1af5d0450ca83873afcae58471015-cc_ft_1536.webp",
+    scroll_images: [],
     price: 295000,
     address: "1120 Lasso Street",
     location: "Minneapolis, MN",
