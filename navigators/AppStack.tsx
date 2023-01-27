@@ -64,7 +64,11 @@ const AppStack = () => {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen name="HomeStack" component={HomeScreenStack} />
+      <Tab.Screen
+        name="HomeStack"
+        component={HomeScreenStack}
+        options={{ title: "Home" }}
+      />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
