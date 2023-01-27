@@ -1,12 +1,16 @@
 import { View, Text, SafeAreaView, TextInput, ScrollView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import Filters from "../components/Filters";
 import { selectUser } from "../redux/userSlice";
 import Houses from "../components/Houses";
+
 const Home = () => {
   const user = useSelector(selectUser);
+  const [search, setSearch] = useState("");
+  const [filterOpen, setFilterOpen] = useState(false);
+
   return (
     <SafeAreaView className="bg-gray-100 flex-1 items-center">
       <Text className="text-lg font-semibold">{user.name}</Text>
@@ -16,21 +20,30 @@ const Home = () => {
           <TextInput
             placeholder="Search"
             keyboardType="default"
+            onChangeText={(text) => setSearch(text)}
             className="flex-1 "
           />
         </View>
+        <AntDesign
+          name="filter"
+          size={24}
+          color="black"
+          onPress={() => setFilterOpen((prev) => !prev)}
+        />
       </View>
 
-      <ScrollView
-        horizontal
-        contentContainerStyle={{ padding: 2 }}
-        className="mb-4"
-      >
-        <Filters title="price" />
-        <Filters title="Bedrooms" />
-        <Filters title="Bathrooms" />
-      </ScrollView>
-      <Houses />
+      {filterOpen && (
+        <ScrollView
+          horizontal
+          contentContainerStyle={{ padding: 2 }}
+          className="mb-4"
+        >
+          <Filters title="price" />
+          <Filters title="Bedrooms" />
+          <Filters title="Bathrooms" />
+        </ScrollView>
+      )}
+      <Houses search={search} />
     </SafeAreaView>
   );
 };
