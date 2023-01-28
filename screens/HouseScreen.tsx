@@ -1,8 +1,20 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Modal,
+  TouchableWithoutFeedback,
+} from "react-native";
+import React, { useState } from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigators/AppStack";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  AntDesign,
+} from "@expo/vector-icons";
 import MapView, { Marker } from "react-native-maps";
 
 type HouseScreenRouteType = RouteProp<HomeStackParamList, "House">;
@@ -13,6 +25,7 @@ const HouseScreen = () => {
       id,
       title,
       image,
+      scroll_images,
       price,
       location,
       address,
@@ -25,6 +38,13 @@ const HouseScreen = () => {
       description,
     },
   } = useRoute<HouseScreenRouteType>();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+
+  const handleImagePress = (image: string) => {
+    setSelectedImage(image);
+    setModalVisible(true);
+  };
 
   return (
     <>
@@ -68,6 +88,45 @@ const HouseScreen = () => {
             {description}
           </Text>
         </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {scroll_images?.map((item) => (
+            <TouchableOpacity key={item} onPress={() => handleImagePress(item)}>
+              <Image
+                source={{ uri: item }}
+                className="w-52 h-40 mr-3 rounded-xl"
+              />
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
+        <Modal
+          visible={modalVisible}
+          animationType="fade"
+          transparent={true}
+          onRequestClose={() => setModalVisible(false)}
+          className="bg-black opacity-25"
+        >
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "rgba(0,0,0,0.7)",
+            }}
+          >
+            <TouchableOpacity
+              className=" z-99 "
+              onPress={() => setModalVisible(false)}
+            >
+              <Text className="text-3xl text-white ">X</Text>
+            </TouchableOpacity>
+            <Image
+              source={{ uri: selectedImage }}
+              className="w-full h-2/5 rounded-2xl object-fill"
+            />
+          </View>
+        </Modal>
+
         <View className=" w-full h-72 rounded-2xl overflow-hidden">
           <MapView
             initialRegion={{
