@@ -1,15 +1,47 @@
 import { View, Text, SafeAreaView, TextInput, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Filters from "../components/Filters";
 import { selectUser } from "../redux/userSlice";
 import Houses from "../components/Houses";
-
+import { selectHouses, setHouses } from "../redux/houseSlice";
+import { houses } from "../houseData";
+import { HouseType } from "../components/HouseItem";
 const Home = () => {
   const user = useSelector(selectUser);
-  const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
   const [filterOpen, setFilterOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const housesData = useSelector(selectHouses);
+  const [data, setData] = useState<HouseType[]>([]);
+
+  useEffect(() => {
+    dispatch(setHouses(houses));
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
+  useEffect(() => {
+    setData(housesData);
+    setLoading(false);
+  }, [housesData]);
+
+  const handleSearch = (search: string) => {
+    if (!search.length) return setData(housesData);
+    const filteredHouseData = housesData.filter((item) =>
+      item.location.toLowerCase().includes(search.toLowerCase())
+    );
+
+    if (filteredHouseData.length) {
+      setData(filteredHouseData);
+    } else {
+      setData(housesData);
+    }
+  };
+
+  console.log(data);
 
   return (
     <SafeAreaView className="bg-gray-100 flex-1 items-center">
@@ -20,7 +52,7 @@ const Home = () => {
           <TextInput
             placeholder="Search"
             keyboardType="default"
-            onChangeText={(text) => setSearch(text)}
+            onChangeText={handleSearch}
             className="flex-1 "
           />
         </View>
@@ -43,7 +75,7 @@ const Home = () => {
           <Filters title="Bathrooms" />
         </ScrollView>
       )}
-      <Houses search={search} />
+      {loading ? <Text>loading...</Text> : <Houses data={data} />}
     </SafeAreaView>
   );
 };
