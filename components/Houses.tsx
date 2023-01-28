@@ -1,14 +1,18 @@
-import { View, Text, ScrollView } from "react-native";
-import React from "react";
-import HouseItem from "./HouseItem";
-import { houses } from "../houseData";
-const Houses = () => {
+import { ScrollView } from "react-native";
+import React, { FC, useState } from "react";
+import HouseItem, { HouseType } from "./HouseItem";
+
+interface props {
+  data: HouseType[];
+}
+const Houses: FC<props> = ({ data }) => {
+  // console.log(data);
   return (
     <ScrollView
       contentContainerStyle={{ paddingVertical: 20 }}
       showsVerticalScrollIndicator={false}
     >
-      {houses.map((house) => (
+      {data.map((house) => (
         <HouseItem
           key={house.id}
           id={house.id}
@@ -20,8 +24,8 @@ const Houses = () => {
           address={house.address}
           longitude={house.longitude}
           latitude={house.latitude}
-          bedrooms={house.rooms.bedrooms}
-          bathrooms={house.rooms.bathrooms}
+          bedrooms={house.bedrooms}
+          bathrooms={house.bathrooms}
           size={house.size}
           cars={house.cars}
           description={house.description}
