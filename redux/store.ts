@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
+import houseReducer from "./houseSlice";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    house: houseReducer,
   },
 });
 
