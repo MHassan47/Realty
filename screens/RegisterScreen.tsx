@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import React, { useState } from "react";
 import { authentication } from "../firebase";
@@ -11,7 +12,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthParamList } from "../navigators/AuthStack";
-
+import registration_image from "../assets/registration_image.jpg";
 const Register = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthParamList, "Register">>();
@@ -37,34 +38,38 @@ const Register = () => {
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 justify-center items-center"
+      className="flex-1 justify-center items-center bg-white space-y-14"
       behavior="padding"
     >
-      <View className="w-4/5">
+      <Image
+        source={registration_image}
+        className="w-2/3 h-1/3 object-scale-down"
+      />
+      <View className="w-4/5 space-y-4">
         <TextInput
           placeholder="First Name"
           value={firstName}
           onChangeText={(text) => setFirstName(text)}
-          className="bg-white px-4 py-3 rounded-lg mt-2 "
+          className="bg-gray-200 px-4 py-3 rounded-lg mt-2 "
         />
         <TextInput
           placeholder="Last Name"
           value={lastName}
           onChangeText={(text) => setLastName(text)}
-          className="bg-white px-4 py-3 rounded-lg mt-2 "
+          className="bg-gray-200 px-4 py-3 rounded-lg mt-2 "
         />
         <TextInput
           placeholder="Email"
           keyboardType="email-address"
           value={email}
           onChangeText={(text) => setEmail(text)}
-          className="bg-white px-4 py-3 rounded-lg mt-2 "
+          className="bg-gray-200 px-4 py-3 rounded-lg mt-2 "
         />
         <TextInput
           placeholder="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
-          className="bg-white px-3 py-3 rounded-lg mt-2 "
+          className="bg-gray-200 px-3 py-3 rounded-lg mt-2 "
           secureTextEntry
         />
       </View>
@@ -72,7 +77,7 @@ const Register = () => {
       <View className="w-4/5 justify-center items-center mt-5 space-y-2">
         <TouchableOpacity
           onPress={handleSignUp}
-          className="bg-blue-400 rounded-xl p-2 w-full items-center"
+          className="bg-[#437370] rounded-xl p-2 w-full items-center"
         >
           <Text className="text-white font-bold text-lg">Register</Text>
         </TouchableOpacity>
@@ -81,7 +86,8 @@ const Register = () => {
           className=" rounded-xl p-2 w-full items-center"
         >
           <Text className="text-black font-bold text-md">
-            Already have an account? Login!
+            Already have an account?{" "}
+            <Text className="text-[#11a6a1]">Login!</Text>
           </Text>
         </TouchableOpacity>
       </View>
