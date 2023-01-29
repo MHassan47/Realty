@@ -8,6 +8,7 @@ import Houses from "../components/Houses";
 import { selectHouses, setHouses } from "../redux/houseSlice";
 import { houses } from "../houseData";
 import { HouseType } from "../components/HouseItem";
+
 const Home = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();

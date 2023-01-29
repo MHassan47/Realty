@@ -13,8 +13,7 @@ export interface HouseType {
   address: string;
   longitude: number;
   latitude: number;
-  bedrooms: number;
-  bathrooms: number;
+  rooms: { bedrooms: number; bathrooms: number };
   size: number;
   cars: number;
   description: string;
@@ -30,8 +29,9 @@ const HouseItem: FC<HouseType> = ({
   address,
   longitude,
   latitude,
-  bedrooms,
-  bathrooms,
+  rooms,
+  // bedrooms,
+  // bathrooms,
   size,
   cars,
   description,
@@ -52,8 +52,9 @@ const HouseItem: FC<HouseType> = ({
           address,
           longitude,
           latitude,
-          bedrooms,
-          bathrooms,
+          rooms,
+          // bedrooms,
+          // bathrooms,
           size,
           cars,
           description,
@@ -76,11 +77,11 @@ const HouseItem: FC<HouseType> = ({
         <Text className="font-semibold text-sm mb-2">{location}</Text>
         <View className="flex-row space-x-5">
           <Text className="font-semibold">
-            {bedrooms}{" "}
+            {rooms.bedrooms}{" "}
             <Text className="font-normal text-[#437370]">Bedrooms</Text>
           </Text>
           <Text className="font-semibold">
-            {bathrooms}{" "}
+            {rooms.bathrooms}{" "}
             <Text className="font-normal text-[#437370]">Bathrooms</Text>
           </Text>
           <Text className="font-semibold">

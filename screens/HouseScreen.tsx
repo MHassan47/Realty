@@ -31,8 +31,9 @@ const HouseScreen = () => {
       address,
       longitude,
       latitude,
-      bedrooms,
-      bathrooms,
+      rooms,
+      // bedrooms,
+      // bathrooms,
       size,
       cars,
       description,
@@ -67,11 +68,11 @@ const HouseScreen = () => {
           <View className="flex-row justify-evenly items-center w-full bg-gray-200 py-4 rounded-2xl">
             <View className="flex-row items-center space-x-2">
               <Ionicons name="bed-outline" size={24} color="gray" />
-              <Text>{bedrooms}</Text>
+              <Text>{rooms.bedrooms}</Text>
             </View>
             <View className="flex-row items-center space-x-2">
               <MaterialCommunityIcons name="shower" size={24} color="gray" />
-              <Text>{bathrooms}</Text>
+              <Text>{rooms.bathrooms}</Text>
             </View>
             <View className="flex-row items-center space-x-2">
               <Ionicons name="car-outline" size={24} color="gray" />

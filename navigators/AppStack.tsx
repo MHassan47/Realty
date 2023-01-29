@@ -20,8 +20,7 @@ export type HomeStackParamList = {
     address: string;
     longitude: number;
     latitude: number;
-    bedrooms: number;
-    bathrooms: number;
+    rooms: { bedrooms: number; bathrooms: number };
     size: number;
     cars: number;
     description: string;

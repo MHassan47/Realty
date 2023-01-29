@@ -24,8 +24,7 @@ const Houses: FC<props> = ({ data }) => {
           address={house.address}
           longitude={house.longitude}
           latitude={house.latitude}
-          bedrooms={house.bedrooms}
-          bathrooms={house.bathrooms}
+          rooms={house.rooms}
           size={house.size}
           cars={house.cars}
           description={house.description}
