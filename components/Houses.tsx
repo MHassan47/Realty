@@ -16,7 +16,7 @@ const Houses: FC<props> = ({ data }) => {
         <HouseItem
           key={house.id}
           id={house.id}
-          title={house.title}
+          // title={house.title}
           image={house.image}
           scroll_images={house.scroll_images}
           price={house.price}
