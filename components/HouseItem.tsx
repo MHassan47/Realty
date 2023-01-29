@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { HomeStackParamList } from "../navigators/AppStack";
 export interface HouseType {
   id: string;
-  title: string;
+  // title: string;
   image: string;
   scroll_images: string[];
   price: number;
@@ -21,7 +21,6 @@ export interface HouseType {
 
 const HouseItem: FC<HouseType> = ({
   id,
-  title,
   image,
   scroll_images,
   price,
@@ -30,8 +29,6 @@ const HouseItem: FC<HouseType> = ({
   longitude,
   latitude,
   rooms,
-  // bedrooms,
-  // bathrooms,
   size,
   cars,
   description,
@@ -44,7 +41,6 @@ const HouseItem: FC<HouseType> = ({
       onPress={() =>
         navigation.navigate("House", {
           id,
-          title,
           image,
           scroll_images,
           price,
@@ -53,8 +49,6 @@ const HouseItem: FC<HouseType> = ({
           longitude,
           latitude,
           rooms,
-          // bedrooms,
-          // bathrooms,
           size,
           cars,
           description,
@@ -69,7 +63,6 @@ const HouseItem: FC<HouseType> = ({
       />
       <View className="px-3 ">
         <View className="flex-row justify-between py-1">
-          <Text className="text-lg font-semibold">{title}</Text>
           <Text className="text-lg font-semibold">
             ${price.toLocaleString()}
           </Text>
