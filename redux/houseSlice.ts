@@ -7,7 +7,6 @@ interface houseSlice {
   houses: HouseType[];
   house: {
     id: string | null;
-    title: string | null;
     image: string | null;
     scroll_images: string[] | null;
     price: number | null;
@@ -28,7 +27,6 @@ const initialState: houseSlice = {
   houses: [],
   house: {
     id: null,
-    title: null,
     image: null,
     scroll_images: null,
     price: null,
