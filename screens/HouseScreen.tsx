@@ -23,7 +23,6 @@ const HouseScreen = () => {
   const {
     params: {
       id,
-      title,
       image,
       scroll_images,
       price,
@@ -60,7 +59,6 @@ const HouseScreen = () => {
             source={{ uri: image }}
             className="w-full p-4 h-80 rounded-xl shadow-xl "
           />
-          <Text className="font-bold text-lg">{title}</Text>
           <View>
             <Text className="text-gray-500">{address}</Text>
             <Text className="text-gray-500">{location}</Text>
