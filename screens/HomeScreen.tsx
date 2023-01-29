@@ -6,22 +6,33 @@ import Filters from "../components/Filters";
 import { selectUser } from "../redux/userSlice";
 import Houses from "../components/Houses";
 import { selectHouses, setHouses } from "../redux/houseSlice";
-import { houses } from "../houseData";
 import { HouseType } from "../components/HouseItem";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
 
 const Home = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const propertiesRef = collection(db, "properties");
   const [filterOpen, setFilterOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const housesData = useSelector(selectHouses);
   const [data, setData] = useState<HouseType[]>([]);
 
   useEffect(() => {
-    dispatch(setHouses(houses));
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    const getProperties = async () => {
+      const properties: HouseType[] = [];
+      const data = await getDocs(propertiesRef);
+      data.forEach((doc) => {
+        properties.push({
+          ...doc.data(),
+          id: doc.id,
+        } as HouseType);
+      });
+      dispatch(setHouses(properties));
+      setData(housesData);
+    };
+    getProperties();
   }, []);
 
   useEffect(() => {
@@ -29,6 +40,7 @@ const Home = () => {
     setLoading(false);
   }, [housesData]);
 
+  console.log(housesData);
   const handleSearch = (search: string) => {
     if (!search.length) return setData(housesData);
     const filteredHouseData = housesData.filter((item) =>
@@ -42,7 +54,7 @@ const Home = () => {
     }
   };
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <SafeAreaView className="bg-gray-100 flex-1 items-center">
