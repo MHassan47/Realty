@@ -26,6 +26,7 @@ const HouseScreen = () => {
   const {
     params: {
       id,
+      ownerId,
       image,
       scroll_images,
       price,

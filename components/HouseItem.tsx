@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { HomeStackParamList } from "../navigators/AppStack";
 export interface HouseType {
   id: string;
-  // title: string;
+  ownerId: string;
   image: string;
   scroll_images: string[];
   price: number;
@@ -21,6 +21,7 @@ export interface HouseType {
 
 const HouseItem: FC<HouseType> = ({
   id,
+  ownerId,
   image,
   scroll_images,
   price,
@@ -41,6 +42,7 @@ const HouseItem: FC<HouseType> = ({
       onPress={() =>
         navigation.navigate("House", {
           id,
+          ownerId,
           image,
           scroll_images,
           price,

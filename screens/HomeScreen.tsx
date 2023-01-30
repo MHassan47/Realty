@@ -40,7 +40,6 @@ const Home = () => {
     setLoading(false);
   }, [housesData]);
 
-  console.log(housesData);
   const handleSearch = (search: string) => {
     if (!search.length) return setData(housesData);
     const filteredHouseData = housesData.filter((item) =>

@@ -23,6 +23,7 @@ export type HomeStackParamList = {
   Home: undefined;
   House: {
     id: string;
+    ownerId: string;
     image: string;
     scroll_images: string[];
     price: number;

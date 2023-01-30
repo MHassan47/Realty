@@ -16,6 +16,7 @@ const Houses: FC<props> = ({ data }) => {
         <HouseItem
           key={house.id}
           id={house.id}
+          ownerId={house.ownerId}
           // title={house.title}
           image={house.image}
           scroll_images={house.scroll_images}

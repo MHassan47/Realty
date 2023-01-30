@@ -47,6 +47,7 @@ const SavedScreen = () => {
             filteredProperty.map((property) => (
               <HouseItem
                 key={property.id}
+                ownerId={property.ownerId}
                 id={property.id}
                 image={property.image}
                 scroll_images={property.scroll_images}

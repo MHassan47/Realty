@@ -22,19 +22,19 @@ const MessageScreen = () => {
   const messagesCol = collection(db, "messages");
   const q = query(messagesCol, orderBy("createdAt"), limit(25));
 
-  useEffect(() => {
-    const getMessages = async () => {
-      const messageArray: messageType[] = [];
-      const data = await getDocs(q);
-      data.forEach((doc) => {
-        messageArray.push({
-          ...doc.data(),
-        } as messageType);
-      });
-      setMessages(messageArray);
-    };
-    getMessages();
-  }, []);
+  //   useEffect(() => {
+  //     const getMessages = async () => {
+  //       const messageArray: messageType[] = [];
+  //       const data = await getDocs(q);
+  //       data.forEach((doc) => {
+  //         messageArray.push({
+  //           ...doc.data(),
+  //         } as messageType);
+  //       });
+  //       setMessages(messageArray);
+  //     };
+  //     getMessages();
+  //   }, []);
 
   console.log(messages);
   return (
