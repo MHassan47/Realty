@@ -1,13 +1,23 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
-import { AntDesign, Ionicons, EvilIcons } from "@expo/vector-icons";
+import { AntDesign, Ionicons, EvilIcons, Feather } from "@expo/vector-icons";
 import ProfileScreen from "../screens/ProfileScreen";
 
 import { HouseType } from "../components/HouseItem";
 import HouseScreen from "../screens/HouseScreen";
 import SavedScreen from "../screens/SavedScreen";
+import MessageScreen from "../screens/MessageScreen";
+import ChatScreen from "../screens/ChatScreen";
+import { NavigatorScreenParams } from "@react-navigation/native";
 const Tab = createBottomTabNavigator();
+
+export type AppStackParamList = {
+  HomeStack: NavigatorScreenParams<HomeStackParamList>;
+  Saved: undefined;
+  ChatStack: NavigatorScreenParams<ChatStackParamList>;
+  Profile: undefined;
+};
 
 export type HomeStackParamList = {
   Home: undefined;
@@ -41,6 +51,26 @@ const HomeScreenStack = () => {
     </HomeStack.Navigator>
   );
 };
+
+export type ChatStackParamList = {
+  Chat: undefined;
+  Messages: undefined;
+};
+
+const ChatStack = createNativeStackNavigator<ChatStackParamList>();
+
+const ChatScreenStack = () => {
+  return (
+    <ChatStack.Navigator screenOptions={{ headerShown: false }}>
+      <ChatStack.Screen name="Chat" component={ChatScreen} />
+      <ChatStack.Screen
+        name="Messages"
+        component={MessageScreen}
+        // options={{ presentation: "modal" }}
+      />
+    </ChatStack.Navigator>
+  );
+};
 const AppStack = () => {
   return (
     <Tab.Navigator
@@ -56,6 +86,8 @@ const AppStack = () => {
             return <AntDesign name={"user"} size={size} color={color} />;
           } else if (route.name === "Saved") {
             return <AntDesign name="hearto" size={size} color={color} />;
+          } else if (route.name === "ChatStack") {
+            return <Feather name="message-square" size={size} color={color} />;
           }
 
           // You can return any component that you like here!
@@ -71,6 +103,11 @@ const AppStack = () => {
         options={{ title: "Home" }}
       />
       <Tab.Screen name="Saved" component={SavedScreen} />
+      <Tab.Screen
+        name="ChatStack"
+        options={{ title: "Chat" }}
+        component={ChatScreenStack}
+      />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
