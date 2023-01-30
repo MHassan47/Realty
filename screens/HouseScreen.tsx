@@ -8,18 +8,21 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import React, { useState } from "react";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { HomeStackParamList } from "../navigators/AppStack";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { AppStackParamList, HomeStackParamList } from "../navigators/AppStack";
 import {
   Ionicons,
   MaterialCommunityIcons,
   AntDesign,
 } from "@expo/vector-icons";
 import MapView, { Marker } from "react-native-maps";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type HouseScreenRouteType = RouteProp<HomeStackParamList, "House">;
 
 const HouseScreen = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AppStackParamList, "HomeStack">>();
   const {
     params: {
       id,
@@ -55,10 +58,13 @@ const HouseScreen = () => {
       >
         {/* <Text>House Item</Text> */}
         <View className="space-y-4">
+          <TouchableOpacity className="absolute top-3 right-5 z-99">
+            <AntDesign name="hearto" size={24} color="black" />
+          </TouchableOpacity>
           <Image
             source={{ uri: image }}
             className="w-full p-4 h-80 rounded-xl shadow-xl "
-          />
+          ></Image>
           <View>
             <Text className="text-gray-500">{address}</Text>
             <Text className="text-gray-500">{location}</Text>
@@ -158,7 +164,13 @@ const HouseScreen = () => {
           </Text>
           <Text>Total Price</Text>
         </View>
-        <TouchableOpacity className="flex-row items-center bg-[#11a6a1] px-8 rounded-2xl">
+        <TouchableOpacity
+          className="flex-row items-center bg-[#11a6a1] px-8 rounded-2xl"
+          onPress={() => {
+            // navigation.pop(2);
+            navigation.navigate("ChatStack", { screen: "Messages" });
+          }}
+        >
           <Text className="text-white text-md font-light">Book Now</Text>
         </TouchableOpacity>
       </View>
