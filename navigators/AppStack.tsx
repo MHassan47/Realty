@@ -6,6 +6,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 
 import { HouseType } from "../components/HouseItem";
 import HouseScreen from "../screens/HouseScreen";
+import SavedScreen from "../screens/SavedScreen";
 const Tab = createBottomTabNavigator();
 
 export type HomeStackParamList = {
@@ -53,6 +54,8 @@ const AppStack = () => {
             return <AntDesign name={"home"} size={size} color={color} />;
           } else if (route.name === "Profile") {
             return <AntDesign name={"user"} size={size} color={color} />;
+          } else if (route.name === "Saved") {
+            return <AntDesign name="hearto" size={size} color={color} />;
           }
 
           // You can return any component that you like here!
@@ -67,6 +70,7 @@ const AppStack = () => {
         component={HomeScreenStack}
         options={{ title: "Home" }}
       />
+      <Tab.Screen name="Saved" component={SavedScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
