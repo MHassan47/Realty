@@ -1,35 +1,65 @@
 import {
-  View,
   Text,
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
+  View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
+import { MaterialIcons } from "@expo/vector-icons";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/userSlice";
 
 interface chatType {
-  createdAt: { nanoseconds: number; seconds: number };
-  userInfo: { displayName: string; uid: string };
+  // createdAt: { nanoseconds: number; seconds: number };
+  // userInfo: { displayName: string; uid: string };
+  participants: string[];
+}
+
+interface othersType {
+  uid: string;
+  displayName: string;
+  email: string;
 }
 
 const ChatScreen = () => {
   const [chats, setChats] = useState<chatType[]>([]);
+  const [others, setOthers] = useState<othersType[]>([]);
   const user = useSelector(selectUser);
+
   useEffect(() => {
-    const chatsArray: chatType[] = [];
+    // const chatsArray: chatType[] = [];
+    const q = query(
+      collection(db, "chats"),
+      where("participants", "array-contains", user.id)
+    );
     const getChats = () => {
       if (user.id) {
-        const unsub = onSnapshot(doc(db, "chats", user.id), (doc) => {
-          const data = doc.data();
-          if (data) {
-            setChats([data as chatType]);
-          }
+        const unsub = onSnapshot(q, (querySnapshot) => {
+          const chats: chatType[] = [];
+          querySnapshot.forEach((doc) => {
+            chats.push(doc.data() as chatType);
+          });
+          const otherUsers: string[] = [];
+          chats.map((chat) =>
+            chat.participants.map((participant) => {
+              if (participant !== user.id) otherUsers.push(participant);
+            })
+          );
+          const promises = otherUsers.map((user) => {
+            return new Promise((resolve) => {
+              onSnapshot(doc(db, "users", user), (doc) => {
+                resolve(doc.data() as othersType);
+              });
+            });
+          });
+
+          Promise.all(promises).then((otherStates) => {
+            setOthers(otherStates as othersType[]);
+          });
         });
-        // setChats(chatsArray);
 
         return () => {
           unsub();
@@ -38,15 +68,27 @@ const ChatScreen = () => {
     };
 
     getChats();
-  }, []);
+  }, [user.id]);
 
-  console.log("+++++++++++", chats);
+  console.log("-----", others.length);
   return (
-    <SafeAreaView>
-      <ScrollView>
-        {chats?.map((chat) => (
-          <TouchableOpacity key={chat.createdAt.seconds}>
-            <Text>{chat.userInfo.displayName}</Text>
+    <SafeAreaView className="bg-white flex-1">
+      <Text className="text-center font-bold text-xl">Chats</Text>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 30 }}
+      >
+        {others?.map((chat) => (
+          <TouchableOpacity
+            key={chat.uid}
+            className="flex-row items-center justify-between mx-4 bg-gray-100 shadow-sm h-20 mt-4 rounded-2xl"
+          >
+            <Text className="text-lg font-semibold px-4 text-gray-600">
+              {chat.displayName}
+            </Text>
+            <View className="bg-[#437370] p-3 rounded-2xl mr-6">
+              <MaterialIcons name="chevron-right" size={24} color="white" />
+            </View>
           </TouchableOpacity>
         ))}
       </ScrollView>
