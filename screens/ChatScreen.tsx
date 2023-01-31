@@ -11,6 +11,9 @@ import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/userSlice";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ChatStackParamList } from "../navigators/AppStack";
 
 interface chatType {
   // createdAt: { nanoseconds: number; seconds: number };
@@ -25,6 +28,8 @@ interface othersType {
 }
 
 const ChatScreen = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<ChatStackParamList, "Chat">>();
   const [chats, setChats] = useState<chatType[]>([]);
   const [others, setOthers] = useState<othersType[]>([]);
   const user = useSelector(selectUser);
@@ -82,6 +87,7 @@ const ChatScreen = () => {
           <TouchableOpacity
             key={chat.uid}
             className="flex-row items-center justify-between mx-4 bg-gray-100 shadow-sm h-20 mt-4 rounded-2xl"
+            onPress={() => navigation.navigate("Messages")}
           >
             <Text className="text-lg font-semibold px-4 text-gray-600">
               {chat.displayName}
