@@ -87,7 +87,9 @@ const ChatScreen = () => {
           <TouchableOpacity
             key={chat.uid}
             className="flex-row items-center justify-between mx-4 bg-gray-100 shadow-sm h-20 mt-4 rounded-2xl"
-            onPress={() => navigation.navigate("Messages")}
+            onPress={() =>
+              navigation.navigate("Messages", { otherID: chat.uid })
+            }
           >
             <Text className="text-lg font-semibold px-4 text-gray-600">
               {chat.displayName}
