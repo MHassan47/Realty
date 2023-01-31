@@ -169,7 +169,10 @@ const HouseScreen = () => {
           className="flex-row items-center bg-[#11a6a1] px-8 rounded-2xl"
           onPress={() => {
             // navigation.pop(2);
-            navigation.navigate("ChatStack", { screen: "Messages" });
+            navigation.navigate("ChatStack", {
+              screen: "Messages",
+              params: { otherID: ownerId },
+            });
           }}
         >
           <Text className="text-white text-md font-light">Book Now</Text>
