@@ -55,7 +55,7 @@ const HomeScreenStack = () => {
 
 export type ChatStackParamList = {
   Chat: undefined;
-  Messages: undefined;
+  Messages: { otherID: string };
 };
 
 const ChatStack = createNativeStackNavigator<ChatStackParamList>();
