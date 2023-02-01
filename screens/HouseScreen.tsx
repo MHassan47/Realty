@@ -5,10 +5,9 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
-  TouchableWithoutFeedback,
   SafeAreaView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { AppStackParamList, HomeStackParamList } from "../navigators/AppStack";
 import {
@@ -18,12 +17,20 @@ import {
 } from "@expo/vector-icons";
 import MapView, { Marker } from "react-native-maps";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { arrayUnion, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/userSlice";
 import { v4 as uuidv4 } from "uuid";
-
 type HouseScreenRouteType = RouteProp<HomeStackParamList, "House">;
 
 const HouseScreen = () => {
@@ -42,8 +49,6 @@ const HouseScreen = () => {
       longitude,
       latitude,
       rooms,
-      // bedrooms,
-      // bathrooms,
       size,
       cars,
       description,
@@ -51,7 +56,7 @@ const HouseScreen = () => {
   } = useRoute<HouseScreenRouteType>();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
-
+  const [hearted, setHearted] = useState(false);
   if (!user || !user.id || !user.name) {
     return (
       <SafeAreaView>
@@ -59,7 +64,7 @@ const HouseScreen = () => {
       </SafeAreaView>
     );
   }
-  console.log(ownerId);
+  console.log(scroll_images);
   const combinedId = user.id < ownerId ? user.id + ownerId : ownerId + user.id;
 
   const onBookNowPress = async () => {
@@ -85,6 +90,37 @@ const HouseScreen = () => {
     setModalVisible(true);
   };
 
+  const handleHeart = async () => {
+    const q = query(
+      collection(db, "user_liked_properties"),
+      where("propertyID", "==", id),
+      where("userID", "==", user.id)
+    );
+    const isHearted = await getDocs(q);
+    console.log(isHearted.empty);
+    if (isHearted.empty) {
+      const res = await addDoc(collection(db, "user_liked_properties"), {
+        propertyID: id,
+        userID: user.id,
+      });
+      setHearted(true);
+    }
+  };
+  useEffect(() => {
+    const checkHeart = async () => {
+      const q = query(
+        collection(db, "user_liked_properties"),
+        where("propertyID", "==", id),
+        where("userID", "==", user.id)
+      );
+      const isHearted = await getDocs(q);
+      console.log(isHearted.empty);
+      if (!isHearted.empty) {
+        setHearted(true);
+      }
+    };
+    checkHeart();
+  }, [id]);
   return (
     <>
       <ScrollView
@@ -94,16 +130,24 @@ const HouseScreen = () => {
       >
         {/* <Text>House Item</Text> */}
         <View className="space-y-4">
-          <TouchableOpacity className="absolute top-3 right-5 z-99">
-            <AntDesign name="hearto" size={24} color="black" />
-          </TouchableOpacity>
           <Image
             source={{ uri: image }}
             className="w-full p-4 h-80 rounded-xl shadow-xl "
-          ></Image>
-          <View>
-            <Text className="text-gray-500">{address}</Text>
-            <Text className="text-gray-500">{location}</Text>
+          />
+          <View className="flex-row items-center">
+            <View className="flex-1">
+              <Text className="text-gray-500">{address}</Text>
+              <Text className="text-gray-500">{location}</Text>
+            </View>
+
+            {/* heart  */}
+            <TouchableOpacity onPress={handleHeart} disabled={hearted}>
+              {hearted ? (
+                <AntDesign name="heart" size={28} color="#675151" />
+              ) : (
+                <AntDesign name="hearto" size={28} color="gray" />
+              )}
+            </TouchableOpacity>
           </View>
           <View className="flex-row justify-evenly items-center w-full bg-gray-200 py-4 rounded-2xl">
             <View className="flex-row items-center space-x-2">
