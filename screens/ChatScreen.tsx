@@ -78,7 +78,6 @@ const ChatScreen = () => {
   console.log("-----", others.length);
   return (
     <SafeAreaView className="bg-white flex-1">
-      <Text className="text-center font-bold text-xl">Chats</Text>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 30 }}
