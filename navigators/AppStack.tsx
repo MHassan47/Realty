@@ -1,10 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
-import { AntDesign, Ionicons, EvilIcons, Feather } from "@expo/vector-icons";
+import { AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import ProfileScreen from "../screens/ProfileScreen";
-
-import { HouseType } from "../components/HouseItem";
 import HouseScreen from "../screens/HouseScreen";
 import SavedScreen from "../screens/SavedScreen";
 import MessageScreen from "../screens/MessageScreen";
@@ -62,13 +60,9 @@ const ChatStack = createNativeStackNavigator<ChatStackParamList>();
 
 const ChatScreenStack = () => {
   return (
-    <ChatStack.Navigator screenOptions={{ headerShown: false }}>
+    <ChatStack.Navigator>
       <ChatStack.Screen name="Chat" component={ChatScreen} />
-      <ChatStack.Screen
-        name="Messages"
-        component={MessageScreen}
-        // options={{ presentation: "modal" }}
-      />
+      <ChatStack.Screen name="Messages" component={MessageScreen} />
     </ChatStack.Navigator>
   );
 };
