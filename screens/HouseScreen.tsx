@@ -6,6 +6,7 @@ import {
   ScrollView,
   Modal,
   TouchableWithoutFeedback,
+  SafeAreaView,
 } from "react-native";
 import React, { useState } from "react";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -17,10 +18,16 @@ import {
 } from "@expo/vector-icons";
 import MapView, { Marker } from "react-native-maps";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { arrayUnion, doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/userSlice";
+import { v4 as uuidv4 } from "uuid";
 
 type HouseScreenRouteType = RouteProp<HomeStackParamList, "House">;
 
 const HouseScreen = () => {
+  const user = useSelector(selectUser);
   const navigation =
     useNavigation<NativeStackNavigationProp<AppStackParamList, "HomeStack">>();
   const {
@@ -44,6 +51,34 @@ const HouseScreen = () => {
   } = useRoute<HouseScreenRouteType>();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
+
+  if (!user || !user.id || !user.name) {
+    return (
+      <SafeAreaView>
+        <Text>Loading...</Text>
+      </SafeAreaView>
+    );
+  }
+  console.log(ownerId);
+  const combinedId = user.id < ownerId ? user.id + ownerId : ownerId + user.id;
+
+  const onBookNowPress = async () => {
+    const chatExists = await getDoc(doc(db, "chats", combinedId));
+    console.log(chatExists);
+    if (!chatExists.exists()) {
+      console.log("doesnt exist");
+      await setDoc(doc(db, "chats", combinedId), {
+        participants: [user.id, ownerId],
+      });
+      await setDoc(doc(db, "message", combinedId), {
+        messages: [],
+      });
+    }
+    navigation.navigate("ChatStack", {
+      screen: "Messages",
+      params: { otherID: ownerId },
+    });
+  };
 
   const handleImagePress = (image: string) => {
     setSelectedImage(image);
@@ -167,13 +202,7 @@ const HouseScreen = () => {
         </View>
         <TouchableOpacity
           className="flex-row items-center bg-[#11a6a1] px-8 rounded-2xl"
-          onPress={() => {
-            // navigation.pop(2);
-            navigation.navigate("ChatStack", {
-              screen: "Messages",
-              params: { otherID: ownerId },
-            });
-          }}
+          onPress={onBookNowPress}
         >
           <Text className="text-white text-md font-light">Book Now</Text>
         </TouchableOpacity>
