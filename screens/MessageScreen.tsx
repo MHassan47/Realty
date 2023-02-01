@@ -7,7 +7,13 @@ import React, {
 } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/userSlice";
-import { arrayUnion, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { ChatStackParamList } from "../navigators/AppStack";
@@ -27,14 +33,19 @@ const MessageScreen = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: otherID,
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => navigation.navigate("Chat")}>
-          <Ionicons name="ios-arrow-back" size={24} color="#437370" />
-        </TouchableOpacity>
-      ),
-    });
+    const getTargetUser = async () => {
+      const targetUser = await getDoc(doc(db, "users", otherID));
+      if (targetUser.exists())
+        navigation.setOptions({
+          headerTitle: targetUser.data().displayName,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate("Chat")}>
+              <Ionicons name="ios-arrow-back" size={24} color="#437370" />
+            </TouchableOpacity>
+          ),
+        });
+    };
+    getTargetUser();
   }, []);
 
   if (!user || !user.id || !user.name) {
@@ -63,7 +74,6 @@ const MessageScreen = () => {
               name: message.user.name,
             },
           }));
-          console.log("=======", messageArray);
           setMessages(formattedMessages as IMessage[]);
         }
       });
@@ -88,7 +98,6 @@ const MessageScreen = () => {
     });
   }, []);
 
-  console.log(user.id);
   return (
     <GiftedChat
       messages={messages}
