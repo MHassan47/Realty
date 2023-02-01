@@ -7,12 +7,13 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
-import { authentication } from "../firebase";
+import { authentication, db } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthParamList } from "../navigators/AuthStack";
-import registration_image from "../assets/registration_image.jpg";
+const registration_image = require("../assets/registration_image.jpg");
+import { doc, setDoc } from "firebase/firestore";
 const Register = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthParamList, "Register">>();
@@ -31,6 +32,11 @@ const Register = () => {
       );
       const user = userCredentials.user;
       await updateProfile(user, { displayName: `${firstName} ${lastName}` });
+      await setDoc(doc(db, "users", userCredentials.user.uid), {
+        uid: userCredentials.user.uid,
+        displayName: `${firstName} ${lastName}`,
+        email,
+      });
     } catch (error) {
       console.error(error);
     }

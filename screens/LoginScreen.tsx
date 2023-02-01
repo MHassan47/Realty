@@ -14,7 +14,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthParamList } from "../navigators/AuthStack";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/userSlice";
-import loginImage from "../assets/login_image.jpg";
+const login_image = require("../assets/login_image.jpg");
 const Login = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthParamList, "Login">>();
@@ -44,7 +44,7 @@ const Login = () => {
       className="flex-1 justify-center items-center bg-white space-y-14"
       behavior="padding"
     >
-      <Image source={loginImage} className="w-2/3 h-1/3 object-scale-down" />
+      <Image source={login_image} className="w-2/3 h-1/3 object-scale-down" />
       <View className="w-4/5 space-y-4">
         <TextInput
           placeholder="Email"
