@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, SafeAreaView } from "react-native";
 import React, { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/userSlice";
@@ -21,20 +21,18 @@ const SavedScreen = () => {
   );
 
   useEffect(() => {
-    const getLiked = async () => {
-      const likedPosts: Likeditem[] = [];
-      const data = await getDocs(likedPropertiesRef);
-      data.forEach((doc) => {
-        likedPosts.push({
-          ...doc.data(),
-        } as Likeditem);
-      });
+    const unsubscribe = onSnapshot(likedPropertiesRef, (snapshot) => {
+      const likedPosts = snapshot.docs.map(
+        (doc) =>
+          ({
+            ...doc.data(),
+          } as Likeditem)
+      );
       setLiked(likedPosts);
-    };
-    getLiked();
+    });
+    return () => unsubscribe();
   }, []);
 
-  console.log(liked.length);
   return (
     <SafeAreaView>
       <Text className="text-2xl p-4 font-semibold">Saved</Text>
