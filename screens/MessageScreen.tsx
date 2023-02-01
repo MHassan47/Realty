@@ -1,29 +1,41 @@
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import { Text, SafeAreaView, TouchableOpacity } from "react-native";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/userSlice";
-import {
-  arrayUnion,
-  doc,
-  onSnapshot,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { arrayUnion, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { ChatStackParamList } from "../navigators/AppStack";
 import { GiftedChat } from "react-native-gifted-chat";
 import { IMessage } from "react-native-gifted-chat/lib/Models";
-import { v4 as uuidv4 } from "uuid";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Ionicons } from "@expo/vector-icons";
 type MessagesScreenRouteType = RouteProp<ChatStackParamList, "Messages">;
 
 const MessageScreen = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<ChatStackParamList, "Messages">>();
   const {
     params: { otherID },
   } = useRoute<MessagesScreenRouteType>();
   const user = useSelector(selectUser);
   const [messages, setMessages] = useState<IMessage[]>([]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: otherID,
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.navigate("Chat")}>
+          <Ionicons name="ios-arrow-back" size={24} color="#437370" />
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
 
   if (!user || !user.id || !user.name) {
     return (
