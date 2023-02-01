@@ -9,6 +9,7 @@ import { selectHouses, setHouses } from "../redux/houseSlice";
 import { HouseType } from "../components/HouseItem";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
+import Loading from "../components/Loading";
 
 const Home = () => {
   const user = useSelector(selectUser);
@@ -37,7 +38,9 @@ const Home = () => {
 
   useEffect(() => {
     setData(housesData);
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, [housesData]);
 
   const handleSearch = (search: string) => {
@@ -87,7 +90,7 @@ const Home = () => {
           <Filters title="Bathrooms" />
         </ScrollView>
       )}
-      {loading ? <Text>loading...</Text> : <Houses data={data} />}
+      {loading ? <Loading /> : <Houses data={data} />}
     </SafeAreaView>
   );
 };
