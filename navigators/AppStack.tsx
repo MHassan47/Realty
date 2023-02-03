@@ -88,7 +88,7 @@ const AppStack = () => {
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "#437370",
+        tabBarActiveTintColor: "#11a6a1",
         tabBarInactiveTintColor: "gray",
       })}
     >
