@@ -6,7 +6,11 @@ A mobile real estate app where users can login, search, filter and save postings
 
 React Native · TypeScript · Redux · Firebase/Firestore · TailWindCSS
 
-https://user-images.githubusercontent.com/98605431/214203092-84d87cb9-b681-498a-b3b5-bfd1a3bb7840.MOV
+
+
+https://user-images.githubusercontent.com/98605431/216506109-9c517952-1ef0-4709-a51c-90a2788e3d8d.MOV
+
+
 
 <img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_login.JPG?raw=true" width="270" height="600" >
 <img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_home.JPG?raw=true" width="270" height="600" >
