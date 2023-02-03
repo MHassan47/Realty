@@ -7,17 +7,16 @@ A mobile real estate app where users can login, search, filter and save postings
 React Native · TypeScript · Redux · Firebase/Firestore · TailWindCSS
 
 
-
 https://user-images.githubusercontent.com/98605431/216506109-9c517952-1ef0-4709-a51c-90a2788e3d8d.MOV
 
 
-
-<img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_login.JPG?raw=true" width="270" height="600" >
-<img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_home.JPG?raw=true" width="270" height="600" >
-<img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_saved.JPG?raw=true" width="270" height="600">
-<img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_messages.JPG?raw=true" width="270" height="600">
-<img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_chats.JPG?raw=true" width="270" height="600" >
-
+<p align="start">
+<img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_login.JPG?raw=true" width="270" height="600" style="display:inline-block">
+<img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_home.JPG?raw=true" width="270" height="600" style="display:inline-block">
+<img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_saved.JPG?raw=true" width="270" height="600" style="display:inline-block">
+<img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_messages.JPG?raw=true" width="270" height="600" style="display:inline-block">
+<img src="https://github.com/MHassan47/Realty/blob/master/assets/realty_chats.JPG?raw=true" width="270" height="600" style="display:inline-block">
+</p>
 ### Clone repo
 
 The client can be started with `expo start` and launched on web, ios or android via emulator
