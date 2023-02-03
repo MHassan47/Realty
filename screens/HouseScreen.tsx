@@ -64,15 +64,14 @@ const HouseScreen = () => {
       </SafeAreaView>
     );
   }
-  console.log(scroll_images);
+
   const combinedId = user.id < ownerId ? user.id + ownerId : ownerId + user.id;
 
   const onBookNowPress = async () => {
     const chatExists = await getDoc(doc(db, "chats", combinedId));
     console.log(chatExists);
     if (!chatExists.exists()) {
-      console.log("doesnt exist");
-      await setDoc(doc(db, "chats", combinedId), {
+      await addDoc(collection(db, "chats"), {
         participants: [user.id, ownerId],
       });
       await setDoc(doc(db, "message", combinedId), {
