@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
@@ -33,6 +33,12 @@ const ChatScreen = () => {
   const [chats, setChats] = useState<chatType[]>([]);
   const [others, setOthers] = useState<othersType[]>([]);
   const user = useSelector(selectUser);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => null,
+    });
+  }, [navigation]);
 
   useEffect(() => {
     // const chatsArray: chatType[] = [];
