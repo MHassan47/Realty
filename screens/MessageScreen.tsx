@@ -32,7 +32,7 @@ const MessageScreen = () => {
   const user = useSelector(selectUser);
   const [messages, setMessages] = useState<IMessage[]>([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const getTargetUser = async () => {
       const targetUser = await getDoc(doc(db, "users", otherID));
       if (targetUser.exists())
