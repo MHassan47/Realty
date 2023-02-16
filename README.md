@@ -1,6 +1,6 @@
 # Realty
 
-A mobile real estate app where users can login, search, filter and save postings and message property owners. All backend data is stored on Google Firestore cloud database
+A mobile real estate app where users can login, search, filter, save postings and message property owners. All backend data is stored on Google Firestore Cloud database
 
 ## Tech Stack
 
