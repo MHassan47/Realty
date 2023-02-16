@@ -247,7 +247,7 @@ const HouseScreen = () => {
           className="flex-row items-center bg-[#11a6a1] px-8 rounded-2xl"
           onPress={onBookNowPress}
         >
-          <Text className="text-white text-md font-light">Book Now</Text>
+          <Text className="text-white text-md font-light">Contact</Text>
         </TouchableOpacity>
       </View>
     </>
